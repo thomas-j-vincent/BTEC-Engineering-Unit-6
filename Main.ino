@@ -68,14 +68,10 @@ void loop()
     if(mediumValue == 1) {
         lcd.print("medium"); 
         onDuration =  (10000 + millis()); 
-    }
-
-    if(smallValue == 1) {
+    } else if(smallValue == 1) {
         lcd.print("small"); 
         onDuration =  (5000 + millis()); 
-    }
-
-    if(continueValue == 1) {
+    } else if(continueValue == 1) {
         lcd.print("continue");
         onDuration =  (5000 + millis()); 
     }
@@ -108,7 +104,7 @@ void loop()
         }
     }
 }
+
 void stopNow() {
     emergencyStopValue = true;
 }
-
