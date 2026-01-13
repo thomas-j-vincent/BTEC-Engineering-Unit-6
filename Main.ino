@@ -47,58 +47,36 @@ void loop()
     continueValue = digitalRead(continueButton);
     smallValue = digitalRead(smallValue);
     mediumValue = digitalRead(mediumValue);
+    
+    
+    if (mediumValue ==1 || smallValue ==1 || continueValue == 1) {
+    lcd.clear();
+    while(lightValue > 800) { // adjust number for lightness (higher is darker)        lcd.setCursor(0,0); 
+        lcd.print("place suitcase");
+        lcd.setCursor(0,1); 
+        lcd.print("on machine      ");
+        lightValue = analogRead(lightSensor);
+    }
+    lcd.clear();
+    lcd.setCursor(0,0); 
+    lcd.print("option selected:");
+    lcd.setCursor(0,1);
+    digitalWrite(dcMotorPin, HIGH);
+    motorValue = true;
+    }
 
     if(mediumValue == 1) {
-        lcd.clear();
-        while(lightValue > 800) { // adjust number for lightness (higher is darker)
-            lcd.setCursor(0,0); 
-            lcd.print("place suitcase");
-            lcd.setCursor(0,1); 
-            lcd.print("on machine");
-        }
-        lcd.setCursor(0,0); 
-        lcd.print("option selected:");
-        lcd.setCursor(0,1);
         lcd.print("medium"); 
-
-        digitalWrite(dcMotorPin, HIGH);
-        motorValue = true;
         onDuration =  (10000 + millis()); 
     }
 
     if(smallValue == 1) {
-        lcd.clear();
-        while(lightValue > 800) { // adjust number for lightness (higher is darker)
-            lcd.setCursor(0,0); 
-            lcd.print("place suitcase");
-            lcd.setCursor(0,1); 
-            lcd.print("on machine");
-        }
-        lcd.setCursor(0,0); 
-        lcd.print("option selected:");
-        lcd.setCursor(0,1);
         lcd.print("small"); 
-
-        digitalWrite(dcMotorPin, HIGH);
-        motorValue = true;
         onDuration =  (5000 + millis()); 
     }
 
     if(continueValue == 1) {
-        lcd.clear();
-        while(lightValue > 800) { // adjust number for lightness (higher is darker)
-            lcd.setCursor(0,0); 
-            lcd.print("place suitcase");
-            lcd.setCursor(0,1); 
-            lcd.print("on machine");
-        } 
-        lcd.setCursor(0,0); 
-        lcd.print("option selected:");
-        lcd.setCursor(0,1);
         lcd.print("continue");
-
-        digitalWrite(dcMotorPin, HIGH);
-        motorValue = true;
         onDuration =  (5000 + millis()); 
     }
 
@@ -113,7 +91,9 @@ void loop()
     if (motorValue && millis() >= onDuration) { 
         digitalWrite(dcMotorPin, LOW);
         motorValue =  false;
-        Serial.println("m loop complete");
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("complete");
     }
 
     if (emergencyStopValue) {
@@ -125,7 +105,6 @@ void loop()
             motorValue =  false;
             digitalWrite(redLED, LOW);
             digitalWrite(greenLED, HIGH);
-        // Infinite loop = program effectively stopped
         }
     }
 }
