@@ -44,7 +44,6 @@ void loop()
 {
     lightValue = analogRead(lightSensor);
 
-    //emergencyStopValue = analogRead(emergencyStop);
     continueValue = digitalRead(continueButton);
     smallValue = digitalRead(smallValue);
     mediumValue = digitalRead(mediumValue);
@@ -65,10 +64,6 @@ void loop()
         digitalWrite(dcMotorPin, HIGH);
         motorValue = true;
         onDuration =  (10000 + millis()); 
-        if (millis() == onDuration) { 
-            digitalWrite(dcMotorPin, LOW);
-            motorValue =  false;
-        }
     }
 
     if(smallValue == 1) {
@@ -87,10 +82,6 @@ void loop()
         digitalWrite(dcMotorPin, HIGH);
         motorValue = true;
         onDuration =  (5000 + millis()); 
-        if (millis() == onDuration) { 
-            digitalWrite(dcMotorPin, LOW);
-            motorValue =  false;
-        }
     }
 
     if(continueValue == 1) {
@@ -109,10 +100,6 @@ void loop()
         digitalWrite(dcMotorPin, HIGH);
         motorValue = true;
         onDuration =  (5000 + millis()); 
-        if (millis() == onDuration) { 
-            digitalWrite(dcMotorPin, LOW);
-            motorValue =  false;
-        }
     }
 
     if(motorValue == true) {
@@ -122,14 +109,22 @@ void loop()
         digitalWrite(redLED, LOW);
         digitalWrite(greenLED, HIGH);
     }
+    
+    if (motorValue && millis() >= onDuration) { 
+        digitalWrite(dcMotorPin, LOW);
+        motorValue =  false;
+        Serial.println("m loop complete");
+    }
 
     if (emergencyStopValue) {
         lcd.clear();
         lcd.setCursor(0,0); 
-        lcd.print("option selected:");
+        lcd.print("emergency stop");
         while (true) {
             digitalWrite(dcMotorPin, LOW);
             motorValue =  false;
+            digitalWrite(redLED, LOW);
+            digitalWrite(greenLED, HIGH);
         // Infinite loop = program effectively stopped
         }
     }
