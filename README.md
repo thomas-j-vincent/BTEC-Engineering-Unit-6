@@ -5,6 +5,12 @@ The code project I used in my Engineering BTEC unit 6
 
 The brief this year was to create a luggage wrapper that can accomodate two sizes of parcels, a small one that lasts for 5 seconds and a large one that lasts for 10 seconds as well as a continue option that adds an extra 5 seconds on. When the parcel is placed onto the machine and the user presses the button it turns on a dc motor for that length of time. There needed to be an lcd that communicates what is going on to the user as well as a light dependent resistor that means the motor only turns on when there is actually a parcel on the machine. An emergency stop was also required which needed to stop everything in case of an accident.
 
+## component layout:
+
+![The layout of the components on tinkercad](componentLayout.png)
+
+This was the layout of the components I used.
+
 ## code breakdown:
 
 I start by including the Liquid Crystal I2C library that is required to communicate with the lcd I am using for this project, this library automatically determines the analog pins that I am using (A4 & A5). 
